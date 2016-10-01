@@ -26,13 +26,13 @@ var content = {
             </p>`
             
         } ;
-function CreateTemplate (data) {
+function createTemplate (data) {
 var title = data.title;
 var heading = data.heading;
 var date = data.date;
 var content = data.content;
 
-var htmltemplate=`
+var htmlTemplate=`
 <html>
     <head>
         <title>
@@ -60,7 +60,7 @@ var htmltemplate=`
         </div>
 </html>
  `;
- return htmltemplate;
+ return htmlTemplate;
 }
 
 app.get('/', function (req, res) {
@@ -68,7 +68,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/article-one', function (req, res) {
-  res.send(CreateTemplate(articleOne));
+  res.send(createTemplate(articleOne));
 });
 
 app.get('/article-two', function (req, res) {
