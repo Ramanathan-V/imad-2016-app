@@ -20,7 +20,7 @@ button.onclick = function () {
     };
     
      //make the request
-     reques.open('GET','http://ramanathan-v.imad.hasura-app.io/counter',true);
+     request.open('GET','http://ramanathan-v.imad.hasura-app.io/counter',true);
      request.send(null);
   
     
