@@ -120,7 +120,7 @@ var names = [];
 
 app.get('/submit-name/:name',function(req,res) {
     //Get the name from request
-    var name = request.params.name;
+    var name = req.params.name;
     
     names.push(name);
     //JSON 
