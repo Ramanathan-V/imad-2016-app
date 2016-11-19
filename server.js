@@ -29,7 +29,7 @@ var articles = {
                 },
                       
         'article-two' : {
-            title:'Article one | Ram',
+            title:'Article two | Ram',
             heading: 'Article two',
             date:'Sep 25, 2016',
             content:` <p>
@@ -38,7 +38,7 @@ var articles = {
                 },
                 
         'article-three' : {
-            title:'Article one | Ram',
+            title:'Article three | Ram',
             heading: 'Article three',
             date:'Sep 30, 2016',
             content:` <p>
