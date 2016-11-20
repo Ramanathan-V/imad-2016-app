@@ -27,8 +27,8 @@ submit.onclick = function () {
     
     // Make the request to the server
        
-     var username = document.getElementById('username');
-     var password = document.getElementById('password');
+     var username = document.getElementById('username').value;
+     var password = document.getElementById('password').value;
      console.log(username);
      console.log(pasword);
      request.open('POST','http://ramanathan-v.imad.hasura-app.io/login',true);
