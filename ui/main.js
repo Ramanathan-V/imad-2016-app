@@ -107,8 +107,21 @@ function loadLogin () {
 
 function loadArticles () {
         // Check if the user is already logged in
+     var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            var articles = document.getElementById('articles');
+            if (request.status === 200) {
+                var content = '<ul>';
+                var articleData = JSON.parse(this.responseText);
+                 content += "</ul>";
+                articles.innerHTML = content;
+            } else {
+                articles.innerHTML('Oops! Could not load all articles!');
+            }
+        }
+    };
    
-    
     request.open('GET', '/get-articles', true);
     request.send(null);
 }
