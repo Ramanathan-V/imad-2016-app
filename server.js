@@ -6,6 +6,9 @@ var crypto = require('crypto');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+
+
+
 var config = {
     user:'ramanathan-v',
     database:'ramanathan-v',
@@ -21,7 +24,6 @@ app.use(session({
     secret: 'someRandomSecretValue',
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 30}
 }));
-
 
 
 function createTemplate (data) {
@@ -72,6 +74,7 @@ function hash (input, salt) {
     return ["pbkdf2", "10000", salt, hashed.toString('hex')].join('$');
 }
 
+
 app.get('/hash/:input', function(req, res) {
    var hashedString = hash(req.params.input, 'this-is-some-random-string');
    res.send(hashedString);
@@ -79,10 +82,10 @@ app.get('/hash/:input', function(req, res) {
 
 app.post('/create-user', function (req, res) {
    // username, password
-   // {"username": "ramanathan-v, "password": "password"}
-   // JSON
+ 
    var username = req.body.username;
    var password = req.body.password;
+  
    var salt = crypto.randomBytes(128).toString('hex');
    var dbString = hash(password, salt);
    pool.query('INSERT INTO "user" (username, password) VALUES ($1, $2)', [username, dbString], function (err, result) {
@@ -93,6 +96,8 @@ app.post('/create-user', function (req, res) {
       }
    });
 });
+
+
 
 app.post('/login', function (req, res) {
    var username = req.body.username;
@@ -127,6 +132,20 @@ app.post('/login', function (req, res) {
    });
 });
 
+
+app.get('/check-login', function (req, res) {
+   if (req.session && req.session.auth && req.session.auth.userId) {
+       res.send('You are logged in: ' + req.session.auth.userId.toString());
+   } else {
+   
+       res.send('You are not logged in');
+   }
+});
+
+app.get('/logout', function (req, res) {
+   delete req.session.auth;
+   res.send('Logged out');
+});
 
 
 var pool = new Pool(config);
@@ -165,7 +184,7 @@ app.get('/submit-name',function(req,res) { //URL: /submit-name?name=xxxx
 app.get('/articles/:articleName', function (req, res) {
     //articleName == article-one
  
-    pool.query ("SELECT * FROM article WHERE title ='" + req.params.articleName + "'", function (err,result){
+    poolpool.query ("SELECT * FROM article WHERE title = $1" , [req.params.articleName], function (err,result){
          if (err) {
             res.status(500).send(err.toString());
         } else {
