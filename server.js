@@ -149,6 +149,7 @@ app.get('/logout', function (req, res) {
 
 
 var pool = new Pool(config);
+
 app.get('/get-articles',function(req,res){
     // make a select request
     // return a response with the results
@@ -206,7 +207,6 @@ app.post('/submit-comment/:articleName', function (req, res) {
 });
 
 
-
 app.get('/articles/:articleName', function (req, res) {
   // SELECT * FROM article WHERE title = '\'; DELETE WHERE a = \'asdf'
   pool.query("SELECT * FROM article WHERE title = $1", [req.params.articleName], function (err, result) {
@@ -223,22 +223,6 @@ app.get('/articles/:articleName', function (req, res) {
   });
 });
 
-
-app.get('/articles/:articleName', function (req, res) {
-  // SELECT * FROM article WHERE title = '\'; DELETE WHERE a = \'asdf'
-  pool.query("SELECT * FROM article WHERE title = $1", [req.params.articleName], function (err, result) {
-    if (err) {
-        res.status(500).send(err.toString());
-    } else {
-        if (result.rows.length === 0) {
-            res.status(404).send('Article not found');
-        } else {
-            var articleData = result.rows[0];
-            res.send(createTemplate(articleData));
-        }
-    }
-  });
-});
 
 app.get('/ui/:fileName', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', req.params.fileName));
